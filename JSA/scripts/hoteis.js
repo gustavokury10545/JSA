@@ -2,31 +2,60 @@ const btnSalvar = document.getElementById('btnSalvar')
 
 btnSalvar.addEventListener('click', () => {
     var inputHotel = document.getElementById('hotel')
-    if (inputHotel === '') {
-        alert('Nome do Hotel Obrigatorio')
+    if(inputHotel.value === ''){
+        alert('o hotel deve ser informado')
         inputHotel.focus()
         return
     }
 
-    const reserva = {
-        hotel: inputHotel.value
-        numero: document.getElementById('numeroDaReserva').value
+    const hospede = {
+        hotel: inputHotel.value,
+        numero: document.getElementById('numero').value
     }
 
-    const reservas = JSON.parse(localStorage.getItem(hoteis))
-    reservas.push(reserva)
-    localStorage.setItem('hoteis', JSON stringify(hoteis))
+    const hospedes = JSON.parse(localStorage.getItem('hospedes')) || []
+    hospedes.push(hospede)
+    localStorage.setItem('hospedes',JSON.stringify(hospedes))
+    limparCampos()
+    carregaHospedes()
 })
 
-const btnCancelar = document.getElementByClassname('btn-outline-secondary')[0]
+const btnCancelar = document.getElementsByClassName('btn-outline-secondary')[0]
 btnCancelar.addEventListener('click', () => {
     limparCampos()
 })
 
-function carregaHoteis() {
-    const reservas = JSON.parse(localStorage.getItem('reservas')) || []
-    let linhas = ''
-    for (let i = 0; i < reservas.length; i++) {
-        linhas += `<tr><td>${hospedes[i].hotel}</td><td>`
-    }
+
+
+function limparCampos(){
+    document.getElementById('hotel').value = ''
+    document.getElementById('hotel').focus()
+    document.getElementById('numero').value = ''
+
 }
+
+function carregaHospedes(){
+const hospedes = JSON.parse(localStorage.getItem('hospedes')) || []
+let linhas = ''
+for(let i = 0; i < hospedes.length; i++){
+    linhas += `<tr><td>${hospedes[i].Hotel}</td><td>${hospedes[i].numero}</td>
+    <td><button onclick=excluir('${hospedes[i].numero}')>Excluir</button></td></tr>`
+}
+document.getElementsByTagName('tbody')[0].innerHTML = linhas
+}
+
+function excluir(numero){
+    console.log(numero)
+    const hospedes = JSON.parse(localStorage.getItem('hospedes')) || []
+    for(let i = 0; i < hospedes.length; i++){
+        if(hospedes[i].numero == numero){
+            hospedes.splice(i,1)
+        }
+    }
+    localStorage.setItem('hospedes',JSON.stringify(hospedes))
+    carregaHospedes()
+}
+
+document.addEventListener('DOMContentLoaded',() => {
+    carregaHospedes()
+})
