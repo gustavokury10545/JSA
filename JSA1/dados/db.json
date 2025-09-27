@@ -1,0 +1,17 @@
+{
+  "contatos": [
+    {
+      "id": "213a",
+      "nome": "gustavo",
+      "email": "Davi@gmail.com",
+      "fone": "(47)996748897"
+    },
+    {
+      "id": "87b9",
+      "nome": "Davi da Silva",
+      "email": "Davi@gmail.com",
+      "fone": "(47)9923-2312"
+    }
+  ],
+  "compromissos": []
+}
